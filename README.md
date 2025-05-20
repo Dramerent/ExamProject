@@ -10,8 +10,8 @@ postgres - Username
 afishaDiplom - имя БД
 
 подключение через npm run dev в папках: 
-/
-/backend
-/adminPanel
-/adminPanel/backend
+/;
+/backend;
+/adminPanel;
+/adminPanel/backend;
 
