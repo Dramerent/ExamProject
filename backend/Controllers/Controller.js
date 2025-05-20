@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import fs from 'fs'
 import { sendConfirmationEmail } from "../mailer.js";
-import { re } from "mathjs";
 import { jwtDecode } from "jwt-decode";
 const prisma = new PrismaClient()
 
