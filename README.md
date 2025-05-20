@@ -9,7 +9,9 @@ postgres - Username
 5005 - Port 
 afishaDiplom - имя БД
 
+
 подключение через "npm run dev" в папках: 
+
 /;
 
 /backend;
@@ -19,7 +21,9 @@ afishaDiplom - имя БД
 /adminPanel/backend;
 
 
+
 скачивание node_modules через "npm i" в папках: 
+
 /;
 
 /backend;
