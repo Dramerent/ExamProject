@@ -30,7 +30,7 @@ export function MoneyRet(){
 
     }, [parse.user_id])
     const postTicketsRefund = async() =>{
-        setRefindData((el) =>({...el, ticket_quantity: ticketCount}))
+        setRefindData((el) =>({...el, ticket_quantity: ticketCount && ticketCount!=0 ? ticketCount : 1}))
         await axios.post('http://localhost:3002/api/postTicketsRefund', refindData, {withCredentials: true})
         .then(el => nav('/userPage'))
         .catch(el => setErr((e) =>({...e, moneyRet: el.response.data ?  el.response.data : "ошибка"})))
