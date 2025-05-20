@@ -1,0 +1,32 @@
+.organizer-form{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    align-items: end;
+    -webkit-box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    padding: 40px 50px;
+    border-radius: 40px;
+    width: 700px;
+}
+.body-block__organizer-form{
+    margin: 120px auto;
+}
+.organizer-form__row-group{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+}
+@media(max-width:900px){
+    .organizer-form{
+        width: 500px;
+    }
+}
+@media(max-width: 600px){
+    .organizer-form{
+        width: 360px;
+        padding: 22px 35px;
+    }
+}

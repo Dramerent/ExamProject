@@ -1,0 +1,56 @@
+@import url(./organizatorFilters/organizatorFilters.css);
+.post-isHeres-block{
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    width: 100%;
+align-items: end;
+    gap: 30px;
+
+}
+.post-isHeres{
+    display: flex;
+    flex-direction: column;
+    overflow: visible;
+    justify-content: end;
+    width: 100%;
+}
+.post-isHeres__table{    
+    min-width: 1000px;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+.post__users-is-here{
+    width: 600px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.post-users{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    width: 900px;
+    justify-content: space-between;
+   
+}
+.post-block__post-users{
+    margin-left: auto;
+}
+@media(max-width: 1300px){
+    .post-isHeres__table{    
+        min-width: 700px;
+        max-width: 700px;
+    }
+}
+@media(max-width: 900px){
+    .post-isHeres__table{    
+        min-width: 700px;
+        max-width: 700px;
+    }
+    .post-isHeres{
+        overflow-x: scroll;
+
+    }
+}

@@ -1,0 +1,27 @@
+.postForm{
+    display: flex;
+    flex-direction: column;
+    border: 1px gray solid;
+    border-radius: 10px;
+    padding: 15px 25px;
+    width: 400px;
+    align-items: start;
+    gap: 10px;
+    justify-content: start;
+
+}
+.postForm__img{
+    height: 100px;
+    width: fit-content;
+}
+.postForm__header{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.Posts{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}

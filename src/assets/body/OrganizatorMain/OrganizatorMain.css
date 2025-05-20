@@ -1,0 +1,11 @@
+@import url('./organizarorMenu/organizarorMenu.css');
+@import url('./organizatorPosts/organizatorPosts.css');
+@import url(./organizatorAllInfo/organizatorAllInfo.css);
+@import url('./organizatorComments/organizatorComments.css');
+.Organizator-page{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 80px;
+    gap: 100px;
+}

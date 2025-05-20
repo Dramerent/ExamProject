@@ -1,0 +1,76 @@
+@import url('./filters/filter.css');
+@import url("./Post/post.css");
+/* БЛОКИ */
+
+.posts{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  gap: 60px;
+  justify-content: end;
+  flex-wrap: wrap;
+  
+  
+}
+.posts-block{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+  
+  
+}
+.posts-part__posts{
+  margin: 30px auto 0 auto;
+}
+.posts-part{
+  display: flex;
+  flex-direction: column;
+  min-width: fit-content;
+  width: 100%;
+  align-items: end;
+}
+.posts-block__posts-part{
+  margin: 80px auto 0 auto;
+}
+.posts-header{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+
+@media (max-width: 1700px){
+  
+}
+@media (max-width: 1400px){
+  .posts-block{
+    width: 740px;
+  }
+  .posts{
+    gap: 40px;
+  }
+}
+
+@media (max-width: 900px){
+  .posts-block{
+    width: 360px;
+  }
+  .posts{
+    width: fit-content;
+    justify-content: center;
+  }
+  .posts_header__page-heading{
+    margin-right: 0;
+  }
+  .posts-block__posts-part{
+    margin-top: 100px;
+  }
+  .posts-header{
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+/* @media(max-width: 600px){
+
+} */

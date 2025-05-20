@@ -1,0 +1,76 @@
+@import url('./postHead/postHead.css');
+@import url('./postInfo/postInfo.css');
+@import url('./postMainHead/postMainHead.css');
+@import url('./mainFinal/mainFinal.css');
+.post-block{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 60px;
+    width: 100%
+    
+}
+.body-block__post-block{
+    margin-top: 120px;
+    margin-left: auto;
+    margin-right: auto;
+}
+.body-block__toBack-text{
+    margin-top: 40px;
+}
+
+
+.post-main{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 70px;
+    display: flex;
+    
+}
+
+
+.other-posts{
+    border-radius: 30px;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    width: 100%;
+    justify-content: end;
+    align-items: center;
+    height: auto;
+    flex-wrap: wrap;
+    height: fit-content;
+    
+}
+.other-posts_padding{
+    padding: 30px 40px;
+
+}
+.other-posts_BC-gray{
+    background-color: rgba(0, 0, 0, 0.040);
+}
+.other-posts-block{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    align-items: end;
+
+}
+.other-posts-block__other-posts{
+    margin-top: 40px;
+}
+
+@media(max-width: 600px){
+    .post-block{
+        padding: 0;
+    }
+    .other-posts_padding{
+        padding: 15px 20px;
+    }
+    .post_slider{
+        height: fit-content;
+        width: 250px;
+    }
+}

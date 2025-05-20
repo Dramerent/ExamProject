@@ -1,0 +1,53 @@
+.payForm{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    -webkit-box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    padding: 50px 60px ;
+    border-radius: 20px;
+    width: 500px;
+}
+.body-block__payform{
+    margin: 0 auto;
+    margin-top: 50px;
+
+}
+
+.payform__personal-info{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.payForm__post-info{
+    display: flex;
+    justify-content: space-between;
+}
+.ticketCount-panel{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+/* .payForm__ticketCount-panel{
+    margin-top: 40px;
+} */
+
+@media(max-width: 600px){
+    .ticketCount-panel{
+        display: flex;
+        flex-direction: row;
+        gap: 20px;
+    }
+    .payForm{
+        width: 300px;
+    }
+    .payForm__post-info{
+        flex-direction: column;
+    }
+    .payform__personal-info,
+    .payForm{
+        gap: 20px;
+    }
+}

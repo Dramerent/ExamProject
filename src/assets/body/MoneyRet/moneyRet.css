@@ -1,0 +1,26 @@
+.refund-form{
+    width: 550px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 30px;
+    -webkit-box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    padding: 50px 60px;
+    border-radius: 50px;
+}
+
+.body-block__refund-form{
+    margin: 0 auto;
+    margin-top: 80px;
+}
+
+
+@media(max-width: 600px){
+    .refund-form{
+        width: 320px;
+        padding: 20px 30px;
+
+    }
+}

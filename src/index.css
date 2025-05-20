@@ -1,0 +1,85 @@
+/* СБРОС НАСТРОЕК */
+*,
+*::before,
+*::after{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family:Verdana, Geneva, Tahoma, sans-serif;
+}
+button, input, select{
+  cursor: pointer;
+  background-color: white;
+  height: min-content;
+  width: min-content;
+  
+}
+td{
+  text-align: end;
+}
+a {
+  color: black;
+  text-decoration: none;
+}
+.swiper-pagination-lock { display: none !important; }
+.swiper, .swiper-wrapper{
+  width: 100%;
+  height: 100%;
+  
+}
+
+p{
+  width: fit-content;
+  height: fit-content;
+
+}
+.swiper-slide{
+  width: fit-content !important;
+  height: fit-content !important;
+  display: flex !important; 
+  justify-content: center !important;
+  align-items: center !important;
+  margin: auto 0;
+}
+textarea{
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 150px;
+  max-width: 100%;
+  min-width: 100%;
+  border-radius: 20px;
+  padding: 10px 15px;
+  resize: none;
+}
+
+
+body{
+  background-color: white;
+}
+
+/* cssTransition */
+
+/* .my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+  transition: opacity 200ms;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+  transition: opacity 200ms;
+} */
+
+/* input[type='number'] {
+  -moz-appearance:textfield;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+} */

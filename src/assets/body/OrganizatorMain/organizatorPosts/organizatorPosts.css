@@ -1,0 +1,10 @@
+.organizatorPosts{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    
+}.organizatorPosts__block{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+}

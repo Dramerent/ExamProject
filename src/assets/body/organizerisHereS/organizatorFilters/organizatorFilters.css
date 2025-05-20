@@ -1,0 +1,19 @@
+.organizator-filters{
+    display: flex;
+    flex-direction: row;
+    gap: 30px;
+    align-items: center;
+}
+@media(max-width: 600px){
+    .organizator-filters{
+        flex-direction: column;
+    }
+    .filter{
+        justify-content: space-between;
+        width: 100%;
+    }
+    .organizator-filters__organizator-filters{
+        margin-left: auto;
+        margin-right:auto ;
+    }
+}

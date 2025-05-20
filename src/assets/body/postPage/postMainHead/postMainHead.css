@@ -1,0 +1,31 @@
+.post-main-head{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 100%;
+}
+.like{
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    cursor: pointer;
+}
+@media(max-width: 1700px){
+    .post-main-head{
+        padding: 0 30px ;
+    }
+    
+}
+
+
+@media(max-width: 600px){
+    .post-main-head{
+        padding: 0 20px 0 20px;
+    }
+    .like{
+        width: 30px;
+        height: 30px;
+    }
+}

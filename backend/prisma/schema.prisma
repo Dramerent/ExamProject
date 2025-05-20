@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Comments {
+  comment_id         Int           @id @default(autoincrement())
+  user_id            Int
+  comment_text       String
+  organizer_id       Int
+  comment_isVerified Boolean?
+  comment_name       String
+  post_id            Int?
+  Organizers         Organizers    @relation(fields: [organizer_id], references: [organizer_id], onDelete: NoAction, onUpdate: NoAction)
+  CreatedPosts       CreatedPosts? @relation(fields: [post_id], references: [post_id], onUpdate: NoAction)
+  Users              Users         @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model CreatedPosts {
+  post_image           String
+  post_description     String
+  post_cost            Int
+  post_meetingPlace    String
+  post_allSeats        Decimal    @db.Decimal
+  post_buydSeats       Decimal    @db.Decimal
+  post_checked         Boolean?
+  organizer_id         Int
+  post_id              Int        @id @default(autoincrement())
+  genre_id             Int
+  post_name            String
+  post_meetDate        DateTime   @db.Date
+  post_fullDescription String
+  Comments             Comments[]
+  Genres               Genres     @relation(fields: [genre_id], references: [genre_id], onDelete: NoAction, onUpdate: NoAction)
+  Organizers           Organizers @relation(fields: [organizer_id], references: [organizer_id], onDelete: NoAction, onUpdate: NoAction)
+  Tickets              Tickets[]
+}
+
+model Genres {
+  genre_id          Int            @id @default(autoincrement())
+  genre_name        String
+  genre_description String
+  sphere_id         Int
+  CreatedPosts      CreatedPosts[]
+  Sphere            Sphere         @relation(fields: [sphere_id], references: [sphere_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Organizers {
+  organizer_description    String
+  organizer_verified       Boolean?
+  organizer_phoneNum       String
+  organizer_id             Int            @id(map: "organizers_pkey") @default(autoincrement())
+  sphere_id                Int
+  organizer_nickname       String
+  user_id                  Int
+  organizer_photo          String         @default("")
+  callback_id              Int
+  organizer_reasonToCancel String?
+  Comments                 Comments[]
+  CreatedPosts             CreatedPosts[]
+  callbacks                callbacks      @relation(fields: [callback_id], references: [callback_id], onDelete: NoAction, onUpdate: NoAction)
+  Sphere                   Sphere         @relation(fields: [sphere_id], references: [sphere_id], onDelete: NoAction, onUpdate: NoAction)
+  Users                    Users          @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Roles {
+  role_name String
+  role_id   Int    @id @default(autoincrement())
+}
+
+model Sphere {
+  sphere_id   Int          @id @default(autoincrement())
+  sphere_name String
+  Genres      Genres[]
+  Organizers  Organizers[]
+}
+
+model Tickets {
+  ticket_id        Int            @id @default(autoincrement())
+  user_id          Int
+  post_id          Int?           @default(0)
+  ticket_quantity  Int            @default(0)
+  ticket_name      String
+  ticket_genre     String
+  ticket_sphere    String
+  ticket_meetPlace String
+  ticket_cost      Int            @default(0)
+  ticket_date      DateTime       @db.Date
+  ticket_isHere    Boolean        @default(false)
+  ticket_isRefind  Boolean        @default(false)
+  organizer_id     Int?
+  ticket_image     String
+  TicketRefund     TicketRefund[]
+  CreatedPosts     CreatedPosts?  @relation(fields: [post_id], references: [post_id], onUpdate: NoAction)
+  Users            Users          @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model Users {
+  user_name      String
+  user_surname   String
+  user_mail      String
+  user_password  String
+  user_photo     String
+  role_id        Int            @default(3)
+  user_id        Int            @id @default(autoincrement())
+  user_likedMass Int[]
+  Comments       Comments[]
+  Organizers     Organizers[]
+  TicketRefund   TicketRefund[]
+  Tickets        Tickets[]
+}
+
+model ReasonsToRefund {
+  reason_id          Int            @id @default(autoincrement())
+  reason_name        String
+  reason_description String
+  TicketRefund       TicketRefund[]
+}
+
+model TicketRefund {
+  ticketRefund_id          Int             @id @default(autoincrement())
+  ticketRefind_description String?
+  ticket_id                Int
+  ticketRefind_isConfirm   Boolean?        @default(false)
+  reason_id                Int
+  user_id                  Int
+  ticketRefund_quantity    Decimal         @db.Decimal
+  ReasonsToRefund          ReasonsToRefund @relation(fields: [reason_id], references: [reason_id], onDelete: NoAction, onUpdate: NoAction)
+  Tickets                  Tickets         @relation(fields: [ticket_id], references: [ticket_id], onDelete: SetNull, onUpdate: NoAction)
+  Users                    Users           @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+model callbacks {
+  callback_id   Int          @id @default(autoincrement())
+  callback_name String
+  Organizers    Organizers[]
+}

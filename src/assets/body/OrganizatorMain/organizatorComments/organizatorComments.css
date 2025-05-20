@@ -1,0 +1,10 @@
+.OrganizatorComments{
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    gap: 40px;
+}
+.comments{
+    width: fit-content;
+    gap: 30px;
+}

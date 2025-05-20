@@ -1,0 +1,43 @@
+@import url(./assets/Organizers/Organizers.css);
+@import url(./assets/Posts/Posts.css);
+@import url(./assets/Refinds/Refinds.css);
+.big-img{
+    width: auto;
+    height: 500px;
+}
+.gray-filter__big-img{
+    margin: auto;
+    position: relative;
+    z-index: 6;
+}
+.gray-filter{
+    background-color: rgba(0, 0, 0, 0.483);
+    position:fixed;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    z-index: 5;
+}
+
+.body{
+    margin-top: 100px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    margin-left: 50px;
+}
+.header{
+    margin:20px  50px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+}
+.name-filter{
+    width: fit-content;
+    height: 50px;
+    border-radius: 10px;
+    padding: 10px 15px;
+}

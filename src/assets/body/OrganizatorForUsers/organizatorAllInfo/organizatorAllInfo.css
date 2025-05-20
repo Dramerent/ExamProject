@@ -1,0 +1,102 @@
+.organizer-page__info{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+}
+.organizer-page__main-info{
+    display: flex;
+    width: 100%;
+    height: fit-content;
+    flex-direction: row;
+    justify-content: end;
+    gap: 100px;
+}
+.organizer-page__description{
+    display: flex;
+    flex-direction: row;
+    justify-content: start;
+    width: 700px;
+}
+.organizer-page__main-info{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    
+}
+.organizer-page__img{
+    width: 1000px;
+    height: 350px;
+    display: flex;
+    -webkit-box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    -moz-box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    box-shadow: -0 -0 17px 1px rgba(34, 60, 80, 0.2);
+    border-radius: 40px;
+    overflow: hidden;
+    margin: 0 auto;
+
+}
+.organizer-page__vertical-line{
+    margin: 0 100px;
+}
+.param_column{
+    flex-direction: column;
+    align-items: end;
+}
+.organizer-page__nickname{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+}
+.organizer-page__second-info{
+    height: 100%;
+    width: 300px;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+   
+}
+@media(max-width: 1400px){
+    .organizer-page__img{
+        width: 700px;
+        height: 245px;
+    }
+    .organizer-page__description{
+        width: 450px;
+    }
+}
+@media(max-width: 900px){
+    .organizer-page__main-info{
+        flex-direction: column-reverse;
+        gap: 50px;
+    }
+    .organizer-page__img{
+        width: 100%;
+        height: 210px;
+    }
+    .organizer-page__info,
+    .organizer-page__description,
+    .organizer-page__info{
+        width: 100%;
+       
+    }
+    .organizer-page__main-info{
+        align-items: end;
+    }
+    
+}
+@media(max-width: 600px){
+    .organizer-page__main-info,
+    .organizer-page__info
+    {
+        gap: 40px;
+    }
+    .organizer-page__second-info{
+        width: 250px;
+        height: 110px;
+    }
+}
