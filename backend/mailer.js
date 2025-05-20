@@ -18,7 +18,7 @@ export const sendConfirmationEmail = async(to, token) => {
   });
 };
 
-export const sendTicketEmail = async(to, name, ticketCount, ticketCost, tickeDate, tickePlace) => {
+export const sendTicketEmail = async(to, name, ticketCount, ticketCost, tickeDate, tickePlace, ticketUniq) => {
   return await transporter.sendMail({
     from: 'MeMail@yandex.ru',
     to,
@@ -27,7 +27,8 @@ export const sendTicketEmail = async(to, name, ticketCount, ticketCost, tickeDat
             <p>кол-во билетов: ${ticketCount}</p>
             <p>сумма билета: ${ticketCost}</p>
             <p>дата проведения: ${tickeDate}</p>
-            <p>место проведения: ${tickePlace}</p>`
+            <p>место проведения: ${tickePlace}</p>
+            <p>Номер билета: ${ticketUniq}</p>`
             
   });
 };

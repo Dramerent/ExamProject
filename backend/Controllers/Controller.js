@@ -1261,16 +1261,36 @@ export class Controller{
         const findTicketInfo = await prisma.createdPosts.findFirst({
         where:{post_id: post_id},
         include:{Genres:{include:{Sphere: true}}}})
-        console.log(findTicketInfo)
-        if(findTicketInfo){
+        await prisma.tickets.create({
+            data:{
+                ticket_cost: findTicketInfo.post_cost,
+                ticket_name: findTicketInfo.post_name,
+                ticket_date: findTicketInfo.post_meetDate,
+                ticket_genre: findTicketInfo.Genres.genre_name,
+                ticket_sphere: findTicketInfo.Genres.Sphere.sphere_name,
+                ticket_meetPlace: findTicketInfo.post_meetingPlace,
+                organizer_id: findTicketInfo.organizer_id,
+                user_mail: user_mail,
+                post_id: post_id,
+                ticket_quantity: post_ticketCount,
+                ticket_image: findTicketInfo.post_image
+            }
+        })
+        const findTicket = await prisma.tickets.findFirst({
+            where:{
+                user_mail: user_mail
+            }
+        })
+        if(findTicket){
             try {
                 await sendTicketEmail(
                     user_mail, 
-                    findTicketInfo.post_name, 
+                    findTicket.ticket_name, 
                     post_ticketCount,
-                    findTicketInfo.post_cost * post_ticketCount, 
-                    findTicketInfo.post_meetDate,
-                    findTicketInfo.post_meetingPlace
+                    findTicket.ticket_cost * post_ticketCount, 
+                    findTicket.ticket_date,
+                    findTicket.ticket_meetPlace,
+                    findTicket.ticket_id
                 );
                 await prisma.createdPosts.update({
                 where:{

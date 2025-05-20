@@ -81,7 +81,7 @@ model Sphere {
 
 model Tickets {
   ticket_id        Int            @id @default(autoincrement())
-  user_id          Int
+  user_id          Int?
   post_id          Int?           @default(0)
   ticket_quantity  Int            @default(0)
   ticket_name      String
@@ -94,9 +94,10 @@ model Tickets {
   ticket_isRefind  Boolean        @default(false)
   organizer_id     Int?
   ticket_image     String
+  user_mail        String?
   TicketRefund     TicketRefund[]
   CreatedPosts     CreatedPosts?  @relation(fields: [post_id], references: [post_id], onUpdate: NoAction)
-  Users            Users          @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
+  Users            Users?         @relation(fields: [user_id], references: [user_id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 model Users {
@@ -125,7 +126,7 @@ model TicketRefund {
   ticketRefund_id          Int             @id @default(autoincrement())
   ticketRefind_description String?
   ticket_id                Int
-  ticketRefind_isConfirm   Boolean?        @default(false)
+  ticketRefind_isConfirm   Boolean?
   reason_id                Int
   user_id                  Int
   ticketRefund_quantity    Decimal         @db.Decimal
