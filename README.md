@@ -8,3 +8,9 @@ postgres - Username
 1243 - Password 
 5005 - Port 
 afishaDiplom - имя БД
+
+подключение через npm run dev в папках: 
+/
+/backend
+/adminPanel
+/adminPanel/backend
