@@ -17,3 +17,17 @@ export const sendConfirmationEmail = async(to, token) => {
     html: `<p>проверочный код: : ${token}</p>`,
   });
 };
+
+export const sendTicketEmail = async(to, name, ticketCount, ticketCost, tickeDate, tickePlace) => {
+  return await transporter.sendMail({
+    from: 'MeMail@yandex.ru',
+    to,
+    subject: 'Ваши данные билета:',
+    html: `<p>Наименование концерта: ${name}</p>
+            <p>кол-во билетов: ${ticketCount}</p>
+            <p>сумма билета: ${ticketCost}</p>
+            <p>дата проведения: ${tickeDate}</p>
+            <p>место проведения: ${tickePlace}</p>`
+            
+  });
+};

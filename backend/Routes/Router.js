@@ -391,3 +391,11 @@ router.post('/registr',
 
 ], controller.registr)
 
+
+
+router.post('/payVerify', [
+    check('user_mail').notEmpty().withMessage('почта не может быть пустой')
+    .isEmail().withMessage('должен быть формат почты (gmail, yandex, и т.п.)')
+], controller.payVerify)
+
+router.post('/payWidthMail', controller.payWidthMail)

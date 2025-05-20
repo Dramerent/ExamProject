@@ -113,12 +113,13 @@ export function Register(){
             }
               {
                 mailVerify == true ? (
-                <>
-                <p>отправьте код из почты: </p>
-                    <input className="input-type1 input-type1_w-100" type="text" onChange =  {(el) => {setRegistr((e) => ({...e, code: el.target.value}))}} placeholder="введите код..."/>
-                    <button type='button' className = "button-type1 button-type1_bg-blue"onClick={() =>{register()}}> <span> <p className="button-text">отправить </p></span> 
-                    </button>
-                </>) : null
+                    <>
+                    <p>отправьте код из почты: </p>
+                        <input className="input-type1 input-type1_w-100" type="text" onChange =  {(el) => {setRegistr((e) => ({...e, code: el.target.value}))}} placeholder="введите код..."/>
+                        <button type='button' className = "button-type1 button-type1_bg-blue"onClick={() =>{register()}}> <span> <p className="button-text">отправить </p></span> 
+                        </button>
+                    </>
+                ) : null
             }
         </div>
        

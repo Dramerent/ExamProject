@@ -3,7 +3,8 @@ import { ExpressValidator, validationResult } from "express-validator";
 import jwt from "jsonwebtoken"
 import bcrypt from "bcrypt"
 import fs from 'fs'
-import { sendConfirmationEmail } from "../mailer.js";
+import { sendConfirmationEmail, sendTicketEmail } from "../mailer.js";
+
 import { jwtDecode } from "jwt-decode";
 const prisma = new PrismaClient()
 
@@ -192,7 +193,7 @@ export class Controller{
         const verifyPassword = Math.floor(100000 + Math.random() * 900000).toString()
 
         const verifytoken = jwt.sign({verifyPassword: verifyPassword},
-        process.env.MAIL_VERIFI_SECRET_WORD, {expiresIn: "10d"})
+        process.env.MAIL_VERIFI_SECRET_WORD, {expiresIn: '2m'})
 
         res.cookie('verifyToken', verifytoken, {
             httpOnly: true, // Защита от XSS
@@ -439,7 +440,7 @@ export class Controller{
            return res.status(404).json(error.errors[0].msg)
         }
         try {
-            const {user_id, post_id, post_ticketCount, post_meetDate} = req.body
+            const {user_id, post_id, post_ticketCount, post_meetDate, user_mail} = req.body
             const findTicket = await prisma.Tickets.findFirst({
                 where:{
                     user_id: user_id,
@@ -1215,6 +1216,78 @@ export class Controller{
             return console.error(error)
         }
       
+
+    }
+    async payVerify(req, res){
+        const error = validationResult(req)
+        if(!error.isEmpty()){
+            return res.status(404).json(error.errors[0].msg)
+        }
+
+        try {
+            const {user_mail} = req.body
+            const verifyPassword = Math.floor(100000 + Math.random() * 900000).toString()
+
+            const verifytoken = jwt.sign({verifyPassword: verifyPassword},
+            process.env.MAIL_VERIFI_SECRET_WORD, {expiresIn: '2h'})
+
+            res.cookie('verifyToken', verifytoken, {
+                httpOnly: true, // Защита от XSS
+                secure: false, // true если HTTPS
+                sameSite: 'lax' // Чтобы куки передавались в кросс-доменных запросах
+            })
+            try {
+                await sendConfirmationEmail(user_mail, verifyPassword);
+                return res.json('проверьте почту');
+            } catch (err) {
+                return res.status(405).json('Ошибка при отправке письма');
+            }
+        } catch (error) {
+            res.status(404).json(error)
+        }
+    }
+    async payWidthMail(req, res){
+        const {user_code, user_mail, post_id, post_ticketCount} = req.body
+        console.log(req.body)
+        const {verifyToken} = req.cookies
+        jwt.verify(verifyToken, process.env.MAIL_VERIFI_SECRET_WORD, (err, decoded) =>{
+            if(err){
+                return res.status(404).json('ошибка подтверждения токена. Перезагрузите страницу и повторите позже')
+            }
+        })
+        const verDecode = jwtDecode(verifyToken)
+        if(verDecode.verifyPassword != user_code) return res.status(404).json('неправильный пароль')
+
+        const findTicketInfo = await prisma.createdPosts.findFirst({
+        where:{post_id: post_id},
+        include:{Genres:{include:{Sphere: true}}}})
+        console.log(findTicketInfo)
+        if(findTicketInfo){
+            try {
+                await sendTicketEmail(
+                    user_mail, 
+                    findTicketInfo.post_name, 
+                    post_ticketCount,
+                    findTicketInfo.post_cost * post_ticketCount, 
+                    findTicketInfo.post_meetDate,
+                    findTicketInfo.post_meetingPlace
+                );
+                await prisma.createdPosts.update({
+                where:{
+                    post_id: post_id
+                },
+                data:{
+                    post_buydSeats: parseInt(findTicketInfo.post_buydSeats) + post_ticketCount
+                }
+            })
+                return res.json('проверьте почту');
+            } catch (err) {
+                return console.log(err);
+            }
+        }
+        else{
+            console.log('bruh')
+        }
 
     }
 }
