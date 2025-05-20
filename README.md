@@ -4,10 +4,10 @@
 Подключение в панеле администратора к базе данных менять в /adminPanel/backend/.env(переменная DATABASE_URL)
 
 "postgresql://postgres:1243@localhost:5005/afishaDiplom?schema=public"
-postgres - Username 
-1243 - Password 
-5005 - Port 
-afishaDiplom - имя БД
+"postgres" - Username; 
+"1243" - Password; 
+"5005" - Port; 
+"afishaDiplom" - имя БД;
 
 
 подключение через "npm run dev" в папках: 
