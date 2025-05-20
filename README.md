@@ -1,8 +1,10 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Подключение к БД осуществляется через программу PostgreSql через PGAdmin4
+Подключение в основном проекте к базе данных менять в /backend/.env (переменная DATABASE_URL)
+Подключение в панеле администратора к базе данных менять в /AdminPanel/backend/.env(переменная DATABASE_URL)
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+"postgresql://postgres:1243@localhost:5005/afishaDiplom?schema=public"
+postgres - Username 
+1243 - Password 
+5005 - Port 
+afishaDiplom - имя БД
