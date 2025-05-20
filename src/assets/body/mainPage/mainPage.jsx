@@ -49,7 +49,6 @@ export function MainPage(){
                             <Post key = {el.post_id}
                                 Click = {() =>{
                                     localStorage.setItem('postId', el.post_id)
-                                    console.log("/backend/" + el.post_image)
                                     nav("/postPage")
                                 }}
                                 genreName = {el.Genres.Sphere.sphere_name + ' - ' + el.Genres.genre_name}

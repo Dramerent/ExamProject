@@ -7,33 +7,36 @@ import { OrganizatorPosts } from "./organizatorPosts/organizatorPosts"
 import { OrganizatorComments } from "./organizatorComments/organizatorComments"
 export function OrganizatorForUsers(){
     const nav = useNavigate()
-    const {getOrganizerOpen,organizerParse, parse, TokenValid, organizatorPosts, getOrganizatorPosts} = useContext(Context)
+    const {organizerParse, postValid, parse,pageInfo, TokenValid, organizatorPosts, getOrganizatorPosts} = useContext(Context)
     
     useEffect(() =>{
-        TokenValid(nav)
-        getOrganizerOpen(nav)
+        TokenValid()
     }, [parse.user_id])
     useEffect(() =>{
+        postValid(nav)
+    }, [localStorage.getItem('postId')])
+
+    useEffect(() =>{
+        console.log(pageInfo.Organizers)
         const func = async() =>{
             const getPosts = await axios.post('http://localhost:3002/api/getOrganizerPosts',{
-                organizer_id: organizerParse.organizer_id
+                organizer_id: pageInfo.Organizers.organizer_id
             },{withCredentials: true})
           .then(el => el.data)
           getOrganizatorPosts(getPosts)
-          console.log(organizerParse)
           }
        func() 
        
-    }, [organizerParse])    
-    if(organizerParse.organizer_id && parse.user_id)return(
+    }, [pageInfo.Organizers])    
+    if(pageInfo.Organizers)return(
         <>
         <div className="return-text-block">
             <Link to = {-1} className="toBack-text body-block__toBack-text">Назад</Link>
         </div>
         <div className="Organizator-page"> 
-            <OrganizatorAllInfo organizerParse = {organizerParse}/>
-            {organizatorPosts.length > 0 ?<OrganizatorPosts posts = {organizatorPosts} nav = {nav}/> : <></>}
-            <OrganizatorComments organizator_id = {organizerParse.organizer_id}/> 
+            <OrganizatorAllInfo organizerParse = {pageInfo}/>
+            {organizatorPosts.length > 0 ? <OrganizatorPosts posts = {organizatorPosts} nav = {nav}/> : <></>}
+            <OrganizatorComments organizator_id = {pageInfo.Organizers.organizer_id}/> 
         </div>
         
         </>

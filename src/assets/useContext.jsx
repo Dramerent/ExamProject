@@ -117,7 +117,7 @@ export const ContextProvider = ({children}) => {
       userName: '',
       userSurname: ''
     }) // для поиска определенных купивших билет
-
+    const [allSpheres, setAllSpheres] = useState() //получение всех сфер
     const [organizatorPosts, getOrganizatorPosts] = useState([]) // для хранения постов определенного организатора
 
     const [comments, setComments] = useState([]) //для хранения коментариев
@@ -154,7 +154,7 @@ export const ContextProvider = ({children}) => {
         }
         const currentDate = Math.floor(Date.now() / 1000);
         const ToF = token.exp <=  currentDate && token !='' ? true : false
-          await axios.post('http://localhost:3002/api/valid',
+        await axios.post('http://localhost:3002/api/valid',
             {
               accessToken: !ToF ? localStorage.getItem("accessToken") : ''
             },
@@ -166,13 +166,13 @@ export const ContextProvider = ({children}) => {
             setParse(parsed)
           }).catch(() =>{
             setParse('')
-            nav('/login')
+            nav ? nav('/login') : null
             return false
           })  
   
       } catch (error) {
         setParse('')
-        nav('/login')
+        nav ? nav('/login') : null
         return false
       }
       return true
@@ -201,17 +201,13 @@ export const ContextProvider = ({children}) => {
            
           }
         ).catch(() =>{
-            nav('/verifyToUpdate')
+            nav ? nav('/verifyToUpdate') : null
             return false 
         })  
 
         return true
     
     } //для проверка валидности токена редактирования информации о ползователе
-    
-
-    
-    
     const getOrganizerOpen = async() =>{
       if(parse.user_id !== undefined){
         const postOrganizerInfo = await axios.post('http://localhost:3002/api/getOrganizer', {
@@ -238,21 +234,7 @@ export const ContextProvider = ({children}) => {
           }
       } //получение данных организатора для организатора
     }
-
-    const getOrganizerForUsers = async(nav) =>{
-      const postOrganizerInfo = await axios.post('http://localhost:3002/api/getOrganizer', {
-        user_id: parse.user_id,
-        }, {withCredentials: true})
-      .then((el) => setOrganizerParseForUsers(el.data))
-      .catch((err) => {
-        return console.log(err)})
-      
-       return nav('/OrganizatorForUsers')
-    } //получение данных организатора для ползователей
-      
-    const postValid = async(nav) =>{
-        const tf = await TokenValid(nav)
-        if(!tf) return 0
+    const postValid = async() =>{
         const postId = localStorage.getItem('postId')? localStorage.getItem('postId'): undefined
         if(postId != undefined){
         const func1 = async() =>{
@@ -285,7 +267,7 @@ export const ContextProvider = ({children}) => {
       func1()
     }
   } // получение данных о выбранном посте
-    const [allSpheres, setAllSpheres] = useState() //получение всех сфер
+    
 
     const getAllSpheres = async() =>{
       
@@ -333,7 +315,8 @@ export const ContextProvider = ({children}) => {
         organizatorPosts, getOrganizatorPosts,
         organizerGenres, setOrganizerGenres,
         comments, setComments,
-        organizerParseForUsers, setOrganizerParseForUsers, getOrganizerForUsers,
+        organizerParseForUsers, setOrganizerParseForUsers, 
+        // getOrganizerForUsers,
 
         postValid,
         guests, setGuests,

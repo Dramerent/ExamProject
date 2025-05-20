@@ -10,8 +10,7 @@ export function PostMainHead(){
     const likeRef = useRef()
     useEffect(() =>{
         const func = async() =>{
-            const tf = await TokenValid(nav)
-            if(!tf) return 0
+            await TokenValid()
             postValid(nav)
         }
         func()

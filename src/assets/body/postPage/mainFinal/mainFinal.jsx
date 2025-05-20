@@ -8,14 +8,7 @@ export function MainFinal ({getAutorPage}){
 
     return(
         <div className="main-final">
-            <button className="button-type1 button-type1_bg-blue" onClick={() => {
-                TokenValid(nav)
-                if(parse){
-                    nav('/pay')
-                }
-                
-                }} 
-                >
+            <button className="button-type1 button-type1_bg-blue" onClick={() => {nav('/pay')}}>
                 <span>
                     <p className="button-text">
                         купить
@@ -23,7 +16,7 @@ export function MainFinal ({getAutorPage}){
                 </span>
             </button>
             <div className="autor">
-                <div onClick = {() => {getOrganizerForUsers(nav)}}className="autor-image">
+                <div onClick = {() => {nav('/OrganizatorForUsers')}}className="autor-image">
                     <img src={"./backend/" + pageInfo.Organizers.organizer_photo} alt="" />
                 </div>
                 <p className="user-name-text">{pageInfo.Organizers.organizer_nickname}</p>

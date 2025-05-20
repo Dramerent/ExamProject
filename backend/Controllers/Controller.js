@@ -43,7 +43,12 @@ export class Controller{
                     post_id: post_id
                 },
                 include: {
-                    Organizers: true,
+                    Organizers: {
+                        include:{
+                            Sphere: true,
+                            callbacks: true
+                        }
+                    },
                     Genres: {
                         include: {
                             Sphere: true
@@ -945,7 +950,8 @@ export class Controller{
                 },
                 include:{
                     Sphere:true,
-                    callbacks: true
+                    callbacks: true,
+
                 }
             })
             if(!getOrganizerInfo || getOrganizerInfo.user_id != user_id){
@@ -957,6 +963,7 @@ export class Controller{
             return res.status(404).json("не найдено нужного")        
         }
     }
+    
     async registerOrganizer(req, res){
         
         const{nickname, description, phoneNumber, callback, sphere, id} = req.body
@@ -1211,5 +1218,3 @@ export class Controller{
 
     }
 }
-
-

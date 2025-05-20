@@ -8,7 +8,7 @@ export function PayMent(){
     const nav = useNavigate()
     const [ticketCount, setTicketCount] = useState(1)
     useEffect(() =>{
-        TokenValid(nav)
+        TokenValid()
         const func = async() =>{
             const getPostInfo =  await axios.post('http://localhost:3002/api/getChoicedPost',{
                 post_id: parseInt(postId)
@@ -22,7 +22,8 @@ export function PayMent(){
     const pay = async() =>{
         console.log(ticketCount)
         await axios.post('http://localhost:3002/api/postBuyd',{
-            user_id: parse.user_id,
+            user_id: parse.user_id ? parse.user_id : null,
+            user_mail: parse.user_id ? parse.user_mail : null,
             post_id: pageInfo.post_id,
             post_meetDate: pageInfo.post_meetDate,
             post_ticketCount: ticketCount,
@@ -45,7 +46,7 @@ export function PayMent(){
                 <p className="h3-text">Оплата заказа №{pageInfo.post_id}</p> 
                 <div className="ghorizontal-double-line" />
                 <div className="payForm__user-info">
-                    <p className="description-text">Ф.И.О.: <b>{parse.user_name} {parse.user_surname}</b> </p> 
+                    {parse.user_id ? <p className="description-text">Ф.И.О.: <b>{parse.user_name} {parse.user_surname}</b> </p> : null }
                     <p className="description-text">почта: <b>{parse.user_mail}</b></p> 
                 </div>
                 <div className="ghorizontal-double-line" />

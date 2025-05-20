@@ -33,7 +33,7 @@ export function LoginForm(){
     return(
         <>
          <div className="return-text-block">
-            <Link to = {-1} className="toBack-text body-block__toBack-text">Назад</Link>
+            <Link to = '/' className="toBack-text body-block__toBack-text">Назад</Link>
         </div>
         <div className="login-form body-block__login-form" >
         {

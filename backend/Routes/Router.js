@@ -140,7 +140,10 @@ router.post('/postBuyd',[
         if(req.body.post_ticketCount < 1 && req.body.post_ticketCount > 5){
             throw new Error('число не может быть равно 0 и меньше 5')
         }
-    })
+    }),
+    check('user_mail').notEmpty().withMessage('нужен email')
+    .isEmail().withMessage('нужен формат почты(email, gmail, и т.п.)')
+    
 ], controller.postBuyd)
 router.post('/updateUserMailVerify', upload.none(),[
     check('user_mail').notEmpty().withMessage("нужен email")
