@@ -15,6 +15,7 @@ export function PayMent(){
     const [ticketCount, setTicketCount] = useState(1)
     useEffect(() =>{
         TokenValid()
+        setErr((el) => ({...el, buyTicket: ''}))
         const func = async() =>{
             const getPostInfo =  await axios.post('http://localhost:3002/api/getChoicedPost',{
                 post_id: parseInt(postId)
@@ -40,7 +41,7 @@ export function PayMent(){
     const pay = async() =>{
         await axios.post('http://localhost:3002/api/postBuyd',{
             user_id: parse.user_id,
-            user_mail: parse.user_id,
+            user_mail: parse.user_mail,
             post_id: pageInfo.post_id,
             post_meetDate: pageInfo.post_meetDate,
             post_ticketCount: ticketCount,

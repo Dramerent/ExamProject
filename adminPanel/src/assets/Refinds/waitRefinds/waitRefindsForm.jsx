@@ -12,6 +12,8 @@ export function WaitRefindsForm({el}){
             </div>
             <p>Причина: {el.ReasonsToRefund.reason_name}</p>
             <p>Описание: {el.ticketRefind_description}</p>
+            <p>количество: {el.ticketRefund_quantity}</p>
+            <p>итоговая стоимость: {el.ticketRefund_quantity * el.Tickets.ticket_cost}</p>
           
              <div className="buttons-group">
                 <button onClick = {() =>{successRefind(el.ticketRefund_id)}}type="button">подтвердить</button>

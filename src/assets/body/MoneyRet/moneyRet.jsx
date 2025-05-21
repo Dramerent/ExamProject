@@ -10,8 +10,9 @@ export function MoneyRet(){
     const [ticketCount, setTicketCount] = useState(1)
     
     const nav = useNavigate()
-    useEffect(() =>{console.log(ticketCount)}, [ticketCount])
+
     useEffect(() =>{
+        setErr((el) =>({...el, moneyRet: ''}), [])
         const tf = TokenValid(nav)
         if(!tf) return 0
         const func = async() =>{ 
@@ -29,8 +30,12 @@ export function MoneyRet(){
         func()
 
     }, [parse.user_id])
+
+    useEffect(() =>{
+        setRefindData((el) =>({...el, ticket_quantity: ticketCount}))
+    }, [ticketCount])
     const postTicketsRefund = async() =>{
-        setRefindData((el) =>({...el, ticket_quantity: ticketCount && ticketCount!=0 ? ticketCount : 1}))
+        setRefindData((el) =>({...el, ticket_quantity: ticketCount}));
         await axios.post('http://localhost:3002/api/postTicketsRefund', refindData, {withCredentials: true})
         .then(el => nav('/userPage'))
         .catch(el => setErr((e) =>({...e, moneyRet: el.response.data ?  el.response.data : "ошибка"})))
@@ -56,7 +61,11 @@ export function MoneyRet(){
                     </p>  
                 </button>
                 <p>{ticketCount}</p>
-                <button onClick={() => {ticketCount < getBuydOne.ticket_quantity ? setTicketCount(ticketCount + 1) : setTicketCount(getBuydOne.ticket_quantity)}}> <p  className="button-text">+</p></button>
+                <button onClick={() => 
+                {
+                    ticketCount < getBuydOne.ticket_quantity ? 
+                    setTicketCount(ticketCount + 1) : setTicketCount(getBuydOne.ticket_quantity) 
+                }}> <p  className="button-text">+</p></button>
                 </>
                 :<p  className="button-text">{ticketCount}</p>}
             </div>

@@ -443,7 +443,7 @@ export class Controller{
             const {user_id, post_id, post_ticketCount, post_meetDate, user_mail} = req.body
             const findTicket = await prisma.Tickets.findFirst({
                 where:{
-                    user_id: user_id,
+                    user_mail: user_mail,
                     post_id: post_id,
                     ticket_date: post_meetDate,
 
@@ -463,6 +463,7 @@ export class Controller{
                     ticket_sphere: findTicketInfo.Genres.Sphere.sphere_name,
                     ticket_meetPlace: findTicketInfo.post_meetingPlace,
                     organizer_id: findTicketInfo.organizer_id,
+                    user_mail: user_mail,
                     user_id: user_id,
                     post_id: post_id,
                     ticket_quantity: post_ticketCount,
@@ -472,7 +473,7 @@ export class Controller{
                 ?   parseInt(findTicketInfo.post_cost) == 0 && findTicket.ticket_quantity + post_ticketCount ==1
                     ?  postTicket = await prisma.tickets.update({
                         where: {
-                            ticket_id: findTicket.ticket_id
+                            user_mail: user_mail
                         },
                         data:{
                             ticket_quantity : findTicket.ticket_quantity + post_ticketCount,
@@ -481,7 +482,7 @@ export class Controller{
                         && 5 - findTicket.ticket_quantity - post_ticketCount >=0
                         ? postTicket = await prisma.tickets.update({
                         where: {
-                            ticket_id: findTicket.ticket_id
+                            user_mail: user_mail
                         },
                         data:{
                             ticket_quantity : findTicket.ticket_quantity + post_ticketCount,
@@ -896,9 +897,13 @@ export class Controller{
         if(!error.isEmpty()){
             return res.status(404).json(error.errors[0].msg)
         }
+        
             try {
             // console.log(req.body)
             const{ticketRefunds_description, reason_id, ticket_id, user_id, ticket_quantity} = req.body
+            if(ticket_quantity == 0){
+                return res.status(404).json('кол-во билетов не может быть равно 0')
+            }
             const findRefind = await prisma.ticketRefund.findFirst({
                 where:{
                     ticket_id: ticket_id,
@@ -1248,66 +1253,90 @@ export class Controller{
     }
     async payWidthMail(req, res){
         const {user_code, user_mail, post_id, post_ticketCount} = req.body
-        console.log(req.body)
+      
         const {verifyToken} = req.cookies
+
         jwt.verify(verifyToken, process.env.MAIL_VERIFI_SECRET_WORD, (err, decoded) =>{
             if(err){
                 return res.status(404).json('ошибка подтверждения токена. Перезагрузите страницу и повторите позже')
             }
         })
+
         const verDecode = jwtDecode(verifyToken)
         if(verDecode.verifyPassword != user_code) return res.status(404).json('неправильный пароль')
 
-        const findTicketInfo = await prisma.createdPosts.findFirst({
+        const findPostInfo = await prisma.createdPosts.findFirst({
         where:{post_id: post_id},
         include:{Genres:{include:{Sphere: true}}}})
-        await prisma.tickets.create({
+
+
+        const findTicketInfo = await prisma.tickets.findFirst({
+            where:{
+                user_mail: user_mail
+            }
+        })
+        if (!findPostInfo && (findPostInfo == null || findPostInfo.length == 0)) return res.status(404).json('ошибка получения мероприятия.')
+            
+        
+        if(!findTicketInfo || findTicketInfo == null){
+           await prisma.tickets.create({
             data:{
-                ticket_cost: findTicketInfo.post_cost,
-                ticket_name: findTicketInfo.post_name,
-                ticket_date: findTicketInfo.post_meetDate,
-                ticket_genre: findTicketInfo.Genres.genre_name,
-                ticket_sphere: findTicketInfo.Genres.Sphere.sphere_name,
-                ticket_meetPlace: findTicketInfo.post_meetingPlace,
-                organizer_id: findTicketInfo.organizer_id,
+                ticket_cost: findPostInfo.post_cost,
+                ticket_name: findPostInfo.post_name,
+                ticket_date: findPostInfo.post_meetDate,
+                ticket_genre: findPostInfo.Genres.genre_name,
+                ticket_sphere: findPostInfo.Genres.Sphere.sphere_name,
+                ticket_meetPlace: findPostInfo.post_meetingPlace,
+                organizer_id: findPostInfo.organizer_id,
                 user_mail: user_mail,
                 post_id: post_id,
                 ticket_quantity: post_ticketCount,
-                ticket_image: findTicketInfo.post_image
+                ticket_image: findPostInfo.post_image
             }
+        })   
+        }
+        else if(findTicketInfo && findTicketInfo.ticket_quantity + post_ticketCount <=5)
+            await prisma.tickets.update({
+                data:{
+                    ticket_quantity: findTicketInfo.ticket_quantity + post_ticketCount
+                },
+                where:{
+                    user_mail: user_mail,
+                    ticket_id: findTicketInfo.ticket_id
+
+                }
         })
+        else return res.status(404).json('ошибка получения билета. Лимит на 1 платный товар - 5 билетов, лими на 1 бесплатный товар - 1 билет')
         const findTicket = await prisma.tickets.findFirst({
             where:{
                 user_mail: user_mail
             }
         })
-        if(findTicket){
-            try {
-                await sendTicketEmail(
-                    user_mail, 
-                    findTicket.ticket_name, 
-                    post_ticketCount,
-                    findTicket.ticket_cost * post_ticketCount, 
-                    findTicket.ticket_date,
-                    findTicket.ticket_meetPlace,
-                    findTicket.ticket_id
-                );
-                await prisma.createdPosts.update({
-                where:{
-                    post_id: post_id
-                },
-                data:{
-                    post_buydSeats: parseInt(findTicketInfo.post_buydSeats) + post_ticketCount
-                }
-            })
-                return res.json('проверьте почту');
-            } catch (err) {
-                return console.log(err);
+      
+        try {
+            await sendTicketEmail(
+                user_mail, 
+                findTicket.ticket_name, 
+                post_ticketCount,
+                findTicket.ticket_cost * post_ticketCount, 
+                findTicket.ticket_date,
+                findTicket.ticket_meetPlace,
+                findTicket.ticket_id
+            );
+            await prisma.createdPosts.update({
+            where:{
+                post_id: post_id
+            },
+            data:{
+                post_buydSeats: parseInt(findPostInfo.post_buydSeats) + post_ticketCount
             }
+        })
+            return res.json('проверьте почту');
+        } catch (err) {
+            return console.log(err);
         }
-        else{
-            console.log('bruh')
-        }
+        
+       
 
     }
 }

@@ -23,12 +23,16 @@ export const sendTicketEmail = async(to, name, ticketCount, ticketCost, tickeDat
     from: 'MeMail@yandex.ru',
     to,
     subject: 'Ваши данные билета:',
-    html: `<p>Наименование концерта: ${name}</p>
-            <p>кол-во билетов: ${ticketCount}</p>
-            <p>сумма билета: ${ticketCost}</p>
-            <p>дата проведения: ${tickeDate}</p>
-            <p>место проведения: ${tickePlace}</p>
-            <p>Номер билета: ${ticketUniq}</p>`
+    html: `<p style = "font-size: 24px">Наименование концерта: <b>${name}</b></p>
+            <p style = "font-size: 18px">кол-во билетов: <b>${ticketCount}</b></p>
+            <p style = "font-size: 18px">сумма билета: <b>${ticketCost}</b></p>
+            <p style = "font-size: 18px">дата проведения: <b>${tickeDate}</b></p>
+            <p style = "font-size: 18px">место проведения: <b>${tickePlace}</b></p>
+            <p style = "font-size: 18px">Номер билета: <b>${ticketUniq}</b></p>
+            <p>* для возврата билетов зарегистрируйтесь в приложении под аккаунтом, на который был получен данный билет </p>`
+
+            
+
             
   });
 };
